@@ -2,7 +2,7 @@
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
-public class AnalogueGlitch : MonoBehaviour
+public class AnalogGlitch : MonoBehaviour
 {
     #region Public Properties
     [Header("Scan Line Jitter")]
@@ -65,12 +65,12 @@ public class AnalogueGlitch : MonoBehaviour
         _material.SetVector("_ScanLineJitter", new Vector2(sl_disp, sl_thresh));
 
         var vj = new Vector2(_verticalJump, _verticalJumpTime);
-        _material.SetVector("_verticalJump", new Vector2(sl_disp, sl_thresh));
+        _material.SetVector("_VerticalJump", vj);
 
         _material.SetFloat("_HorizontalShake", _horizontalShake * 0.2f);
 
         var cd = new Vector2(_colourDrift * 0.04f, Time.time * 606.11f);
-        _material.SetVector("colourDrift", cd);
+        _material.SetVector("_ColourDrift", cd);
 
         Graphics.Blit(source, destination, _material);
 

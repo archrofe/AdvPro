@@ -21,25 +21,31 @@
 	{
 		float u = i.uv.x;
 		float v = i.uv.y;
-		//scan line jitter
+
+		//Scan line jitter
 		float jitter = nrand(v, _Time.x) * 2 - 1;
 		jitter *= step(_ScanLineJitter.y, abs(jitter)) * _ScanLineJitter.x;
+
 		//Vertical Jump
 		float jump = lerp(v, frac(v + _VerticalJump.y), _VerticalJump.x);
+
 		//Horizontal Jump
 		float shake = (nrand(_Time.x, 2) - 0.5)* _HorizontalShake;
+
 		//Colour Drift
 		float drift = sin(jump + _ColourDrift.y)* _ColourDrift.x;
 		half4 src1 = tex2D(_MainTex, frac(float2(u + jitter + shake, jump)));
 		half4 src2 = tex2D(_MainTex, frac(float2(u + jitter + shake + drift, jump)));
-		return half4(scr1.r, src2.g, src1.b, 1);
-	}
+		return half4(src1.r, src2.g, src1.b, 1);
+		}
 		ENDCG
+
 		SubShader
 	{
 		Pass
 		{
-			ZTest Always Cull Pff ZWrite Off
+			ZTest Always Cull Off ZWrite Off
+
 			CGPROGRAM
 			#pragma vertex vert_img
 			#pragma fragment frag
